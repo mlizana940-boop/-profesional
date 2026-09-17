@@ -1,0 +1,10 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores de estado de una reserva -->
+    <color name="estado_solicitada">#FF9F00</color>
+    <color name="estado_aceptada">#2E7D32</color>
+    <color name="estado_rechazada">#C62828</color>
+    <color name="estado_reprogramada">#1565C0</color>
+</resources>

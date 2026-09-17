@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Agenda Profesional</string>
+
+    <!-- Principal (P-PR01) -->
+    <string name="titulo_principal">Sistema de Reservas</string>
+    <string name="subtitulo_principal">Aplicación B · Profesional</string>
+    <string name="btn_ver_reservas">Ver reservas</string>
+
+    <!-- Listado (P-PR02) -->
+    <string name="titulo_lista">Reservas</string>
+    <string name="filtro_todos_estados">Todos los estados</string>
+    <string name="hint_sin_reservas">No hay reservas para el filtro seleccionado</string>
+
+    <!-- Detalle (P-PR03) -->
+    <string name="titulo_detalle">Detalle de la reserva</string>
+    <string name="label_nombre">Nombre del cliente</string>
+    <string name="label_servicio">Servicio</string>
+    <string name="label_profesional">Profesional</string>
+    <string name="label_fecha">Fecha</string>
+    <string name="label_hora">Hora</string>
+    <string name="label_estado">Estado</string>
+    <string name="label_observacion">Observación</string>
+    <string name="label_fecha_nueva">Nueva fecha</string>
+    <string name="label_hora_nueva">Nueva hora</string>
+    <string name="accion_aceptar">Aceptar</string>
+    <string name="accion_rechazar">Rechazar</string>
+    <string name="accion_reprogramar">Reprogramar</string>
+    <string name="accion_cancelar">Cancelar</string>
+    <string name="msg_aceptada">Reserva aceptada</string>
+    <string name="msg_rechazada">Reserva rechazada</string>
+    <string name="msg_reprogramada">Reserva reprogramada</string>
+    <string name="titulo_rechazar">Rechazar reserva</string>
+    <string name="msg_rechazo_obligatorio">El motivo del rechazo es obligatorio.</string>
+    <string name="hint_observacion_obligatoria">Motivo del rechazo</string>
+    <string name="msg_observacion_obligatoria">La observación es obligatoria para rechazar</string>
+    <string name="msg_propuesta_horario">Propuesta de nuevo horario por el profesional</string>
+    <string name="msg_reserva_no_encontrada">Reserva no encontrada</string>
+    <string name="msg_sin_conexion">Sin conexión. Intente nuevamente</string>
+</resources>

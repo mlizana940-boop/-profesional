@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas de DESARROLLO: lectura y escritura abiertas para todos los documentos.
+    // Ajustar antes de producción (RNF-05).
+    match /reservas/{reserva} {
+      allow read, write: if true;
+    }
+  }
+}
