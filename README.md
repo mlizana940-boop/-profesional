@@ -29,21 +29,16 @@ P-PR01 Principal → P-PR02 Listado (fecha + estado + RecyclerView) → P-PR03 D
 
 Los botones **Aceptar / Rechazar / Reprogramar** solo se muestran cuando la reserva está `SOLICITADA` o `REPROGRAMADA`.
 
-## Conectar a Firebase (paso pendiente por el estudiante)
+## Conectar a Firebase (con google-services.json)
 
-La app configura Firebase **de forma programática** (no se usa `google-services.json`). Solo completa 2 valores:
+La app usa el plugin `com.google.gms.google-services`, igual que la App Cliente. Firebase se inicializa solo a partir del archivo.
 
-1. Ve a la [consola de Firebase](https://console.firebase.google.com), crea un proyecto y agrega una **app Android** con `applicationId = com.example.profesional`.
-2. En *Configuración del proyecto → Tus apps* copia el **ID del proyecto** y la **Clave de API (Web API Key)**.
-3. Ábrelo en `app/src/main/java/com/example/profesional/FirebaseConfig.kt`:
+1. Pide al dueño del proyecto `reservas-h1-2026` que te agregue en *Project settings → Users and permissions → Add member* (rol **Editor**).
+2. En la [consola de Firebase](https://console.firebase.google.com/) abre `reservas-h1-2026` → **Add app → Android**, con package `com.example.profesional` (sin Analytics).
+3. Descarga `google-services.json` y cópialo en `app/google-services.json`.
+4. Sincroniza Gradle y ejecuta la app.
 
-```kotlin
-const val PROJECT_ID = "mi-proyecto-12345"
-const val API_KEY = "AIzaSy..."
-```
-
-4. Activa **Cloud Firestore** en la consola (creación de base de datos en modo de pruebas).
-5. Aplica las reglas de desarrollo de [firestore.rules](firestore.rules):
+Reglas de desarrollo en [firestore.rules](firestore.rules). Ojo: las que valen son las del proyecto en la consola.
 
 ```
 rules_version = '2';
