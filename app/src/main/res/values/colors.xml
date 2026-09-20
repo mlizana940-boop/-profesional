@@ -2,9 +2,48 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Colores de estado de una reserva -->
-    <color name="estado_solicitada">#FF9F00</color>
+    <!-- Colores de estado de una reserva (los usa el código: no renombrar) -->
+    <color name="estado_solicitada">#E6A700</color>
     <color name="estado_aceptada">#2E7D32</color>
     <color name="estado_rechazada">#C62828</color>
     <color name="estado_reprogramada">#1565C0</color>
+
+    <!-- Mismos colores con los nombres del pack de diseño -->
+    <color name="color_solicitada">#E6A700</color>
+    <color name="color_aceptada">#2E7D32</color>
+    <color name="color_rechazada">#C62828</color>
+    <color name="color_reprogramada">#1565C0</color>
+    <color name="color_gris_claro">#F1F7F8</color>
+    <color name="color_gris_texto">#888888</color>
+    <color name="color_blanco_puro">#FFFFFF</color>
+
+    <!-- === Paleta turquesa (Material 3) === -->
+    <color name="colorPrimary">#006A6E</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorPrimaryContainer">#9EF1F8</color>
+    <color name="colorOnPrimaryContainer">#002023</color>
+
+    <color name="colorSecondary">#486267</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorSecondaryContainer">#C9E7EC</color>
+    <color name="colorOnSecondaryContainer">#041F23</color>
+
+    <color name="colorTertiary">#375E5E</color>
+    <color name="colorOnTertiary">#FFFFFF</color>
+    <color name="colorTertiaryContainer">#BEE3E2</color>
+    <color name="colorOnTertiaryContainer">#121C1C</color>
+
+    <color name="colorError">#BA1A1A</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="colorErrorContainer">#FFDAD6</color>
+    <color name="colorOnErrorContainer">#410002</color>
+
+    <color name="colorBackground">#FBFEFE</color>
+    <color name="colorOnBackground">#191C1C</color>
+    <color name="colorSurface">#FBFEFE</color>
+    <color name="colorOnSurface">#191C1C</color>
+    <color name="colorSurfaceVariant">#DAE4E6</color>
+    <color name="colorOnSurfaceVariant">#3F4849</color>
+    <color name="colorOutline">#6F7979</color>
+    <color name="colorOutlineVariant">#BEC8CA</color>
 </resources>
