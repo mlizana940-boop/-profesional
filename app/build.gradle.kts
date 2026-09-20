@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -9,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.profesional"
+        applicationId = "com.example.profesional_app_reservas"
         minSdk = 29
         targetSdk = 37
         versionCode = 1

@@ -21,6 +21,7 @@ import com.example.profesional.model.Reserva
 import com.example.profesional.repository.MSG_SIN_CONEXION
 import com.example.profesional.repository.ReservaRepository
 import com.example.profesional.util.Formato
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ListenerRegistration
@@ -50,6 +51,9 @@ class ListaReservasActivity : AppCompatActivity() {
             insets
         }
 
+        findViewById<MaterialToolbar>(R.id.toolbar)
+            .setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
         repository = ReservaRepository()
         btnFecha = findViewById(R.id.btnFecha)
         tvVacio = findViewById(R.id.tvVacio)
@@ -75,7 +79,6 @@ class ListaReservasActivity : AppCompatActivity() {
 
     private fun configurarFecha() {
         btnFecha.setOnClickListener {
-            val now = LocalDate.now()
             DatePickerDialog(
                 this,
                 { _, anio, mes, dia ->
@@ -86,10 +89,7 @@ class ListaReservasActivity : AppCompatActivity() {
                 fechaFiltro.year,
                 fechaFiltro.monthValue - 1,
                 fechaFiltro.dayOfMonth
-            ).apply {
-                datePicker.minDate = now.toEpochDay() * 86_400_000L
-                show()
-            }
+            ).show()
         }
     }
 

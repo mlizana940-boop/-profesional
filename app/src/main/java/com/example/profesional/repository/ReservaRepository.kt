@@ -1,7 +1,6 @@
 package com.example.profesional.repository
 
 import android.util.Log
-import com.example.profesional.FirebaseConfig
 import com.example.profesional.model.EstadoReserva
 import com.example.profesional.model.Reserva
 import com.google.firebase.firestore.FieldValue
@@ -18,8 +17,8 @@ import kotlinx.coroutines.tasks.await
  */
 class ReservaRepository {
 
-    private val db: FirebaseFirestore? = firestoreSiConfigurado()
-    private val coleccion get() = db?.collection(Reserva.COLECCION)
+    private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    private val coleccion get() = db.collection(Reserva.COLECCION)
 
     /**
      * Escucha en tiempo real las reservas de una fecha, con filtro de estado opcional.
@@ -31,12 +30,7 @@ class ReservaRepository {
         onResult: (List<Reserva>) -> Unit,
         onError: (String) -> Unit
     ): ListenerRegistration? {
-        val ref = coleccion ?: run {
-            onError(MSG_NO_CONFIGURADO)
-            return null
-        }
-
-        var consulta: Query = ref.whereEqualTo("fecha", fecha)
+        var consulta: Query = coleccion.whereEqualTo("fecha", fecha)
         if (estado != null) {
             consulta = consulta.whereEqualTo("estado", estado)
         }
@@ -56,16 +50,14 @@ class ReservaRepository {
 
     /** Trae un documento puntual de una reserva. null si no existe (ERR-04). */
     suspend fun obtenerReserva(id: String): Reserva? {
-        val ref = coleccion ?: return null
-        val doc = ref.document(id).get().await()
+        val doc = coleccion.document(id).get().await()
         return if (doc.exists()) Reserva.fromMap(doc.id, doc.data) else null
     }
 
     /** Acepta una reserva: estado -> ACEPTADA (RF-14). */
     suspend fun aceptar(id: String): ResultadoOperacion {
-        val ref = coleccion ?: return ResultadoOperacion.Error(MSG_NO_CONFIGURADO)
         return try {
-            ref.document(id)
+            coleccion.document(id)
                 .update("estado", EstadoReserva.ACEPTADA, "actualizadoEn", FieldValue.serverTimestamp())
                 .await()
             ResultadoOperacion.Exito
@@ -77,9 +69,8 @@ class ReservaRepository {
 
     /** Rechaza una reserva: estado -> RECHAZADA con observación obligatoria (RF-15). */
     suspend fun rechazar(id: String, observacion: String): ResultadoOperacion {
-        val ref = coleccion ?: return ResultadoOperacion.Error(MSG_NO_CONFIGURADO)
         return try {
-            ref.document(id)
+            coleccion.document(id)
                 .update(
                     "estado", EstadoReserva.RECHAZADA,
                     "observacion", observacion,
@@ -100,9 +91,8 @@ class ReservaRepository {
         horaNueva: String,
         observacion: String
     ): ResultadoOperacion {
-        val ref = coleccion ?: return ResultadoOperacion.Error(MSG_NO_CONFIGURADO)
         return try {
-            ref.document(id)
+            coleccion.document(id)
                 .update(
                     "estado", EstadoReserva.REPROGRAMADA,
                     "fechaNueva", fechaNueva,
@@ -119,7 +109,7 @@ class ReservaRepository {
     }
 
     /** Traduce un error de Firestore a mensajes claros para el usuario. */
-    private fun mensajeDeError(t: Throwable): String {
+    fun mensajeDeError(t: Throwable): String {
         if (t is FirebaseFirestoreException) {
             return when (t.code) {
                 Code.PERMISSION_DENIED -> "Permiso denegado: revisa las reglas de Firestore (ERR-06)"
@@ -129,16 +119,6 @@ class ReservaRepository {
             }
         }
         return MSG_SIN_CONEXION
-    }
-
-    private fun firestoreSiConfigurado(): FirebaseFirestore? {
-        if (!FirebaseConfig.isConfigured) return null
-        return try {
-            FirebaseFirestore.getInstance()
-        } catch (t: Throwable) {
-            Log.e(TAG, "No se pudo obtener Firestore", t)
-            null
-        }
     }
 
     companion object {

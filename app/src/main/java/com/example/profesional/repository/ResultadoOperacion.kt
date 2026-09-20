@@ -11,5 +11,4 @@ sealed class ResultadoOperacion {
 
 // Mensajes exigidos por los errores de la pauta (ERR-01, ERR-06, ERR-04).
 const val MSG_SIN_CONEXION = "Sin conexión. Intente nuevamente"
-const val MSG_NO_CONFIGURADO = "Firebase no configurado. Completa FirebaseConfig.kt"
 const val MSG_RESERVA_NO_ENCONTRADA = "Reserva no encontrada"

@@ -3,6 +3,7 @@ package com.example.profesional.ui
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -21,8 +22,10 @@ import com.example.profesional.repository.ReservaRepository
 import com.example.profesional.repository.ResultadoOperacion
 import com.example.profesional.util.Formato
 import com.example.profesional.util.UtilRed
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -63,6 +66,9 @@ class DetalleReservaActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        findViewById<MaterialToolbar>(R.id.toolbar)
+            .setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         repository = ReservaRepository()
         reservaId = intent.getStringExtra(ListaReservasActivity.EXTRA_RESERVA_ID)
@@ -110,16 +116,32 @@ class DetalleReservaActivity : AppCompatActivity() {
         tvNoEncontrada.visibility = View.GONE
 
         lifecycleScope.launch {
-            val datos = repository.obtenerReserva(id)
-            progress.visibility = View.GONE
+            try {
+                val datos = repository.obtenerReserva(id)
+                progress.visibility = View.GONE
 
-            if (datos == null) {
-                mostrarNoEncontrada()
-            } else {
-                reserva = datos
-                mostrarReserva(datos)
+                if (datos == null) {
+                    mostrarNoEncontrada()
+                } else {
+                    reserva = datos
+                    mostrarReserva(datos)
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (t: Throwable) {
+                // ERR-06 / ERR-01: mensaje claro y log; la app no se cierra.
+                Log.e("DetalleReserva", "Error al cargar la reserva $id", t)
+                mostrarError(repository.mensajeDeError(t))
             }
         }
+    }
+
+    private fun mostrarError(mensaje: String) {
+        progress.visibility = View.GONE
+        contenedorDetalle.visibility = View.GONE
+        tvNoEncontrada.text = mensaje
+        tvNoEncontrada.visibility = View.VISIBLE
+        Snackbar.make(findViewById(R.id.main), mensaje, Snackbar.LENGTH_LONG).show()
     }
 
     private fun mostrarReserva(r: Reserva) {
